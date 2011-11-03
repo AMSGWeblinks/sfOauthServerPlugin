@@ -1,6 +1,11 @@
 sfOauthServerConsumer:
   actAs: { Timestampable: ~ }
   columns:
+    id:
+      type: integer(4)
+      autoincrement: true
+      unsigned: true
+      primary: true
     consumer_key: {type: string(40), notnull: true, unique:true}
     consumer_secret: {type: string(40), notnull: true, unique:true}
     name : {type : string(256), notnull:true}
@@ -24,10 +29,15 @@ sfOauthServerRequestToken:
       updated: 
         disabled: true
   columns:
+    id:
+      type: integer(4)
+      autoincrement: true
+      unsigned: true
+      primary: true
     token: {type: string(40), notnull: true, unique:true}
     secret: {type: string(40), notnull: false}
-    consumer_id: {type: integer, notnull: true}
-    user_id: {type: integer}
+    consumer_id: {type: integer(4), notnull: true, unsigned: true}
+    user_id: {type: integer(4), unsigned: true }
     callback: {type: string(256) }
     scope: {type : string(256), notnull:false}
     expires: { type: integer}
@@ -46,10 +56,15 @@ sfOauthServerAccessToken:
       updated: 
         disabled: true
   columns:
+    id:
+      type: integer(4)
+      autoincrement: true
+      unsigned: true
+      primary: true
     token: {type: string(40), notnull: true, unique:true}
     secret: {type: string(40), notnull: false}
-    consumer_id: {type: integer, notnull: true}
-    user_id: {type: integer, notnull: false}
+    consumer_id: {type: integer(4), notnull: true, unsigned: true}
+    user_id: {type: integer(4), notnull: false, unsigned: true}
     scope: {type: string(256), notnull:false}
     expires: { type: integer}
     protocole: {type: integer, default: 1 }
@@ -68,12 +83,22 @@ sfOauthServerNonce:
       updated: 
         disabled: true
   columns:
+    id:
+      type: integer(4)
+      autoincrement: true
+      unsigned: true
+      primary: true
     nonce: {type: string(40), notnull: true, unique:true}
 
 sfOauthServerUserScope:
   columns:
-    user_id: {type: integer, notnull: true}
-    consumer_id: {type: integer, notnull: true}
+    id:
+      type: integer(4)
+      autoincrement: true
+      unsigned: true
+      primary: true
+    user_id: {type: integer(4), notnull: true, unsigned: true}
+    consumer_id: {type: integer(4), notnull: true, unsigned: true}
     scope: {type: string(256), notnull:false}
   relations:
     User: {class: sfGuardUser, local: user_id, foreign: id, onDelete : cascade}
@@ -81,8 +106,13 @@ sfOauthServerUserScope:
   
 sfOauthServerDeveloper:
   columns:
-    consumer_id: {type: integer, notnull: true}
-    user_id: {type: integer, notnull: true}
+    id:
+      type: integer(4)
+      autoincrement: true
+      unsigned: true
+      primary: true
+    consumer_id: {type: integer(4), notnull: true, unsigned: true}
+    user_id: {type: integer(4), notnull: true, unsigned: true}
     admin: {type: boolean, default: false}
   relations:
     Consumer:
